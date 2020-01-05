@@ -11,10 +11,7 @@ const strategy = new Strategy(options, async (email, password, done) => {
   const user = await User.findOne({ email });
 
   if (!user) {
-    return done({
-      statusCode: 401,
-      message: `No user is associated with email ${email}`,
-    });
+    return done(new Error(`No user is associated with email ${email}`));
   }
 
   const same = await bcrypt.compare(password, user.password);
@@ -23,7 +20,7 @@ const strategy = new Strategy(options, async (email, password, done) => {
     delete user.password;
     done(null, user);
   } else {
-    done({ statusCode: 401, message: 'Invalid password' });
+    done(new Error('Invalid password'));
   }
 });
 
