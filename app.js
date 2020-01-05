@@ -4,6 +4,7 @@ const logger = require('morgan');
 const debug = require('debug')('mern-shops-app:server');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const { errors } = require('celebrate');
 
 const Router = require('./routes/');
 
@@ -26,5 +27,8 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api/v1/', Router);
+
+// Handle errors thrown by celebrate
+app.use(errors());
 
 module.exports = app;
