@@ -20,7 +20,10 @@ const strategy = new Strategy(options, async (email, password, done) => {
     delete user.password;
     done(null, user);
   } else {
-    done(new Error('Invalid password'));
+    done({
+      statusCode: 401,
+      message: 'Invalid password',
+    });
   }
 });
 

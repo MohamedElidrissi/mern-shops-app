@@ -31,4 +31,11 @@ app.use('/api/v1/', Router);
 // Handle errors thrown by celebrate
 app.use(errors());
 
+// Handle any errors left
+app.use((err, req, res, next) => {
+  if (!err) next();
+
+  res.status(err.statusCode || 500).json({ message: err.message });
+});
+
 module.exports = app;
