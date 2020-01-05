@@ -17,7 +17,7 @@ const strategy = new Strategy(options, async (email, password, done) => {
   const same = await bcrypt.compare(password, user.password);
 
   if (same) {
-    delete user.password;
+    user.set('password', undefined);
     done(null, user);
   } else {
     done({

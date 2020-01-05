@@ -10,7 +10,7 @@ const strategy = new Strategy(options, async (payload, done) => {
   const user = await User.findById(payload.sub);
 
   if (user) {
-    delete user.password;
+    user.set('password', undefined);
     done(null, user);
   } else {
     done({
