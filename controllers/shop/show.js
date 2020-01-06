@@ -7,15 +7,19 @@ const { Shop } = require('../../models/');
 async function show(req, res) {
   const { long, lat, page, per_page } = req.query;
 
-  const shops = await Shop.find()
-    .skip((page - 1) * per_page)
-    .limit(per_page)
-    .near('location', {
-      center: [parseFloat(long), parseFloat(lat)],
-      spherical: true,
-    })
-    .exec();
+  const [totalCount, shops] = await Promise.all([
+    Shop.estimatedDocumentCount().exec(),
+    Shop.find()
+      .skip((page - 1) * per_page)
+      .limit(per_page)
+      .near('location', {
+        center: [parseFloat(long), parseFloat(lat)],
+        spherical: true,
+      })
+      .exec(),
+  ]);
 
+  res.setHeader('X-Total-Count', totalCount);
   res.status(200).json(shops);
 }
 
