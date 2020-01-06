@@ -1,4 +1,7 @@
 const mongoose = require('mongoose');
+const postSaveErrorHandler = require('../middlewares/mongoose/postSaveErrorHandler');
+
+const modelName = 'User';
 
 const UserSchema = new mongoose.Schema({
   username: {
@@ -8,6 +11,7 @@ const UserSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
+    unique: true,
   },
   password: {
     type: String,
@@ -15,4 +19,6 @@ const UserSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model('User', UserSchema);
+UserSchema.post('save', postSaveErrorHandler.bind(UserSchema, modelName));
+
+module.exports = mongoose.model(modelName, UserSchema);
