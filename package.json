@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start:api": "DEBUG=mern-shops-app:* nodemon ./bin/www"
+    "start:api": "DEBUG=mern-shops-app:* nodemon ./bin/www",
+    "start:client": "cd client && npm start"
   },
   "dependencies": {
     "bcrypt": "^3.0.7",
