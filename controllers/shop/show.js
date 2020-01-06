@@ -19,6 +19,23 @@ async function show(req, res) {
       .exec(),
   ]);
 
+  // Setup the Link pagination header
+  // TODO: this is kinda messy
+  const { protocol, hostname, path } = req;
+  const url = `${protocol}://${hostname}:${process.env.PORT}/api/v1${path}?per_page=${per_page}&long=${long}&lat=${lat}`;
+  const lastPage = Math.ceil(totalCount / per_page);
+
+  const links = {
+    last: `${url}?page=${lastPage}`,
+  };
+
+  if (page < lastPage) {
+    Object.assign(links, {
+      next: `${url}?page=${page + 1}`,
+    });
+  }
+
+  res.links(links);
   res.setHeader('X-Total-Count', totalCount);
   res.status(200).json(shops);
 }
