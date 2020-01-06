@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start:api": "DEBUG=mern-shops-app:* nodemon ./bin/www",
-    "start:client": "cd client && npm start"
+    "start:client": "cd client && npm start",
+    "dev": "concurrently --kill-others \"npm run start:api\" \"npm run start:client\""
   },
   "dependencies": {
     "bcrypt": "^3.0.7",
@@ -21,6 +22,7 @@
     "passport-local": "^1.0.0"
   },
   "devDependencies": {
+    "concurrently": "^5.0.2",
     "nodemon": "^2.0.2"
   }
 }
