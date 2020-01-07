@@ -1,4 +1,4 @@
-const { create, show } = require('../controllers/likes/');
+const { create, show, remove } = require('../controllers/likes/');
 const passport = require('../middlewares/passport/');
 
 module.exports = router => {
@@ -6,5 +6,6 @@ module.exports = router => {
     .route('/users/me/likes')
     .all(passport('jwt'))
     .post(create)
-    .get(show);
+    .get(show)
+    .delete(remove);
 };
