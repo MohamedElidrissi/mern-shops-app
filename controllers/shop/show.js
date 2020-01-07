@@ -1,4 +1,4 @@
-const { Shop } = require('../../models/');
+const { Shop, User } = require('../../models/');
 
 // Show non-liked shops sorted by distance from a given longitude and latitude.
 // Route: {apiBaseUrl}/shops
@@ -6,6 +6,13 @@ const { Shop } = require('../../models/');
 // Access: Protected
 async function show(req, res) {
   const { long, lat, page, per_page } = req.query;
+  const { id } = req.user;
+
+  const user = await User.findById(id, { _id: 0, shops: 1 });
+
+  const userLikedShops = user.shops
+    .filter(shop => shop.status === 'disliked')
+    .map(shop => shop.shopId);
 
   const [totalCount, shops] = await Promise.all([
     Shop.estimatedDocumentCount().exec(),
@@ -16,6 +23,8 @@ async function show(req, res) {
         center: [parseFloat(long), parseFloat(lat)],
         spherical: true,
       })
+      .where('_id')
+      .nin(userLikedShops)
       .exec(),
   ]);
 
