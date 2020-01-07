@@ -1,9 +1,9 @@
 const { Shop } = require('../../models/');
 
-// Show all shops sorted by distance from a given longitude and latitude.
+// Show non-liked shops sorted by distance from a given longitude and latitude.
 // Route: {apiBaseUrl}/shops
 // Method: Get
-// Access: Public
+// Access: Protected
 async function show(req, res) {
   const { long, lat, page, per_page } = req.query;
 
