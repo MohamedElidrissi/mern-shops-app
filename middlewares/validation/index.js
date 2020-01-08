@@ -5,6 +5,7 @@ const AuthenticateUserSchema = require('./user/AuthenticateUserSchema');
 const GetAllShopsSchema = require('./shop/GetAllShopsSchema');
 const CreateReactionSchema = require('./reaction/CreateReactionSchema');
 const GetReactionsSchema = require('./reaction/GetReactionsSchema');
+const DeleteReactionSchema = require('./reaction/DeleteReactionSchema');
 
 module.exports = {
   createUserValidator: celebrate(CreateUserSchema),
@@ -12,4 +13,5 @@ module.exports = {
   getAllShopsValidator: celebrate(GetAllShopsSchema),
   createReactionValidator: celebrate(CreateReactionSchema),
   getReactionsValidator: celebrate(GetReactionsSchema),
+  deleteReactionSchema: celebrate(DeleteReactionSchema),
 };
