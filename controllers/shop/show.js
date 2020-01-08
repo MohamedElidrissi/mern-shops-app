@@ -1,18 +1,17 @@
-const { Shop, User } = require('../../models/');
+const { Shop, Reaction } = require('../../models/');
 
 // Show non-liked shops sorted by distance from a given longitude and latitude.
 // Route: {apiBaseUrl}/shops
 // Method: Get
 // Access: Protected
 async function show(req, res) {
+  const { id: userId } = req.user;
   const { long, lat, page, per_page } = req.query;
-  const { id } = req.user;
 
-  const user = await User.findById(id, { _id: 0, shops: 1 });
-
-  const userLikedShops = user.shops
-    .filter(shop => shop.status === 'disliked')
-    .map(shop => shop.shopId);
+  const userReactions = await Reaction.find(
+    { userId },
+    { _id: 0, shopId: 1 }
+  ).map(reactions => reactions.map(reaction => reaction.shopId));
 
   const [totalCount, shops] = await Promise.all([
     Shop.estimatedDocumentCount().exec(),
@@ -24,7 +23,7 @@ async function show(req, res) {
         spherical: true,
       })
       .where('_id')
-      .nin(userLikedShops)
+      .nin(userReactions)
       .exec(),
   ]);
 

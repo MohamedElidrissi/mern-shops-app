@@ -19,18 +19,6 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  shops: [
-    {
-      shopId: {
-        type: ObjectId,
-        ref: 'Shop',
-      },
-      status: {
-        type: String,
-        enum: ['liked', 'disliked'],
-      },
-    },
-  ],
 });
 
 UserSchema.post('save', postSaveErrorHandler.bind(UserSchema, modelName));
