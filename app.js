@@ -5,6 +5,7 @@ const debug = require('debug')('mern-shops-app:server');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const { errors } = require('celebrate');
+const requireJsonContentType = require('./middlewares/requireJsonContentType');
 
 dotenv.config();
 
@@ -25,6 +26,9 @@ db.on('error', debug.bind(debug, 'Could not connect to MongoDB:'));
 app.use(logger('dev'));
 app.use(cors());
 app.use(express.json());
+
+// Require application/json Content-Type
+app.post('/api/v1/*', requireJsonContentType);
 
 app.use('/api/v1/', Router);
 
