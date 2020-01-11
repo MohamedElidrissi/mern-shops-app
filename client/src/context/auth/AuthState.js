@@ -6,13 +6,18 @@ import {
   REGISTER_FAIL,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
+  USER_FETCH_SUCCESS,
+  USER_FETCH_FAIL,
 } from './authActions';
 import AuthContext from './authContext';
 import authReducer from './authReducer';
+import setAuthToken from '../../utils/setAuthToken';
 
 export default props => {
   const initialState = {
     isAuthenticated: false,
+    isLoading: true,
+    user: {},
     flash: {
       severity: '',
       message: '',
@@ -59,12 +64,27 @@ export default props => {
     }
   };
 
+  const fetchUser = async () => {
+    try {
+      setAuthToken(localStorage.getItem('token'));
+      const res = await axios.get('/users/me', config);
+
+      dispatch({
+        type: USER_FETCH_SUCCESS,
+        payload: res.data,
+      });
+    } catch (err) {
+      dispatch({ type: USER_FETCH_FAIL });
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
         ...state,
         register,
         login,
+        fetchUser,
       }}
     >
       {props.children}

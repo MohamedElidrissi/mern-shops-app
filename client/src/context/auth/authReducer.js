@@ -3,6 +3,8 @@ import {
   REGISTER_FAIL,
   LOGIN_FAIL,
   LOGIN_SUCCESS,
+  USER_FETCH_SUCCESS,
+  USER_FETCH_FAIL,
 } from './authActions';
 
 export default (state, action) => {
@@ -29,6 +31,20 @@ export default (state, action) => {
       return {
         ...state,
         isAuthenticated: true,
+      };
+    case USER_FETCH_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        isAuthenticated: true,
+        user: action.payload,
+      };
+    case USER_FETCH_FAIL:
+      return {
+        ...state,
+        user: {},
+        isLoading: false,
+        isAuthenticated: false,
       };
     default:
       return state;
