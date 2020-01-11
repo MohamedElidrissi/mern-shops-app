@@ -1,12 +1,18 @@
 import React, { useReducer } from 'react';
 import axios from 'axios';
 
-import { REGISTER_SUCCESS, REGISTER_FAIL } from './authActions';
+import {
+  REGISTER_SUCCESS,
+  REGISTER_FAIL,
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
+} from './authActions';
 import AuthContext from './authContext';
 import authReducer from './authReducer';
 
 export default props => {
   const initialState = {
+    isAuthenticated: false,
     flash: {
       severity: '',
       message: '',
@@ -37,11 +43,28 @@ export default props => {
     }
   };
 
+  const login = async userCredentials => {
+    try {
+      const res = await axios.post('/auth', userCredentials, config);
+
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: res.data.token,
+      });
+    } catch (err) {
+      dispatch({
+        type: LOGIN_FAIL,
+        payload: err.response.data.message,
+      });
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
         ...state,
         register,
+        login,
       }}
     >
       {props.children}

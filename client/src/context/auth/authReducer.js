@@ -1,4 +1,9 @@
-import { REGISTER_SUCCESS, REGISTER_FAIL } from './authActions';
+import {
+  REGISTER_SUCCESS,
+  REGISTER_FAIL,
+  LOGIN_FAIL,
+  LOGIN_SUCCESS,
+} from './authActions';
 
 export default (state, action) => {
   switch (action.type) {
@@ -11,12 +16,18 @@ export default (state, action) => {
         },
       };
     case REGISTER_FAIL:
+    case LOGIN_FAIL:
       return {
         ...state,
         flash: {
           severity: 'error',
           message: action.payload,
         },
+      };
+    case LOGIN_SUCCESS:
+      return {
+        ...state,
+        isAuthenticated: true,
       };
     default:
       return state;
