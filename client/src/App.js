@@ -1,8 +1,8 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 
 import AuthState from './context/auth/AuthState';
-import ProtectedRoute from './components/ProtectedRoute';
+import ProtectedRoute from './components/routing/ProtectedRoute';
 import Home from './pages/Home';
 import SignUp from './pages/SignUp';
 import SignIn from './pages/SignIn';
@@ -13,7 +13,8 @@ function App() {
       <AuthState>
         <BrowserRouter>
           <Switch>
-            <ProtectedRoute exact path="/" component={Home} />
+            <Redirect exact from="/" to="/nearby" />
+            <ProtectedRoute path="/nearby" component={Home} />
             <Route path="/signup" component={SignUp} />
             <Route path="/signin" component={SignIn} />
           </Switch>
