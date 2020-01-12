@@ -5,7 +5,8 @@ const CreateReactionSchema = {
     shopId: Joi.string().required(),
     type: Joi.string()
       .equal('LIKE', 'DISLIKE')
-      .uppercase(),
+      .uppercase()
+      .required(),
   }),
 };
 
