@@ -17,6 +17,7 @@ const useStyles = makeStyles(theme => ({
 function NearbyShopsList() {
   const classes = useStyles();
 
+  const [isLocPermissionAllowed, setLocPermissionAllowed] = useState(true);
   const [coords, setCoords] = useState({ long: 0, lat: 0 });
   const {
     fetchShops,
@@ -29,6 +30,12 @@ function NearbyShopsList() {
         long: coords.longitude,
         lat: coords.latitude
       })
+      setLocPermissionAllowed(true);
+    }, (error) => {
+      if (error.code === 1) {
+        // PERMISSION_ERROR
+        setLocPermissionAllowed(false);
+      }
     });
     // eslint-disable-next-line
   }, []);
@@ -42,7 +49,7 @@ function NearbyShopsList() {
 
   return (
     <Fragment>
-      { (!coords.long && !coords.lat) && (
+      { !isLocPermissionAllowed && (
         <Alert severity="warning">
           Please allow location permission in your browser to see your nearby shops.
         </Alert>
