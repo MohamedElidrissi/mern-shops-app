@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 
 import AuthState from './context/auth/AuthState';
 import ProtectedRoute from './components/routing/ProtectedRoute';
-import Home from './pages/Home';
+import Header from './components/layout/Header';
 import SignUp from './pages/SignUp';
 import SignIn from './pages/SignIn';
 
@@ -14,7 +14,15 @@ function App() {
         <BrowserRouter>
           <Switch>
             <Redirect exact from="/" to="/nearby" />
-            <ProtectedRoute path="/nearby" component={Home} />
+            <ProtectedRoute
+              path="/nearby"
+              render={() => (
+                <Fragment>
+                  <Header />
+                  <h1>Nearby Shops</h1>
+                </Fragment>
+              )}
+            />
             <Route path="/signup" component={SignUp} />
             <Route path="/signin" component={SignIn} />
           </Switch>
