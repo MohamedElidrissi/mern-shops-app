@@ -1,5 +1,6 @@
 import React, { useReducer } from 'react';
 import axios from 'axios';
+import parse from 'parse-link-header';
 
 import shopReducer from './shopReducer';
 import ShopContext from './shopContext';
@@ -10,7 +11,11 @@ import {
 
 export default props => {
   const initialState = {
-    nearbyShops: [],
+    nearbyShops: {
+      data: [],
+      hasMore: false,
+      nextPage: null
+    },
   };
 
   const [state, dispatch] = useReducer(shopReducer, initialState);
@@ -21,12 +26,16 @@ export default props => {
         `/shops?page=${page}&long=${long}&lat=${lat}`
       );
 
+      const links = parse(res.headers.link);
+
       dispatch({
         type: FETCH_NEARBY_SHOPS_SUCCESS,
-        payload: res.data,
+        payload: {
+          shops: res.data,
+          hasMore: !!links.next
+        },
       });
     } catch (err) {
-      console.log(err);
       dispatch({ type: FETCH_NEARBY_SHOPS_FAIL });
     }
   };

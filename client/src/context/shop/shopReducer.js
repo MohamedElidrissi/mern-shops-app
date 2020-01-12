@@ -7,10 +7,13 @@ export default (state, action) => {
   switch (action.type) {
     case FETCH_NEARBY_SHOPS_SUCCESS:
       return {
-        nearbyShops: [
-          ...state.nearbyShops,
-          ...action.payload
-        ]
+        nearbyShops: {
+          data: [
+            ...state.nearbyShops.data,
+            ...action.payload.shops
+          ],
+          hasMore: action.payload.hasMore
+        }
       };
     case FETCH_NEARBY_SHOPS_FAIL:
     default:
