@@ -34,12 +34,12 @@ async function show(req, res) {
   const lastPage = Math.ceil(totalCount / per_page);
 
   const links = {
-    last: `${url}?page=${lastPage}`,
+    last: `${url}&page=${lastPage}`,
   };
 
   if (page < lastPage) {
     Object.assign(links, {
-      next: `${url}?page=${page + 1}`,
+      next: `${url}&page=${page + 1}`,
     });
   }
 
