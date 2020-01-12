@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function Shop({ id, name, thumbnail }) {
+function NearbyShop({ id, name, thumbnail }) {
   const classes = useStyles();
 
   return (
@@ -55,10 +55,10 @@ function Shop({ id, name, thumbnail }) {
   );
 }
 
-Shop.propTypes = {
+NearbyShop.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   thumbnail: PropTypes.string.isRequired,
 };
 
-export default Shop;
+export default NearbyShop;
