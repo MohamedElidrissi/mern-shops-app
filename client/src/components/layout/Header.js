@@ -1,7 +1,6 @@
 import React, { Fragment, useContext, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
-import Button from '@material-ui/core/Button';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
