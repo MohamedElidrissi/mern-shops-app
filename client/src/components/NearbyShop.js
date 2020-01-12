@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
@@ -9,6 +9,8 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import ThumbUp from '@material-ui/icons/ThumbUp';
 import ThumbDown from '@material-ui/icons/ThumbDown';
+
+import ShopContext from '../context/shop/shopContext';
 
 const useStyles = makeStyles(theme => ({
   cardGrid: {
@@ -31,6 +33,8 @@ const useStyles = makeStyles(theme => ({
 function NearbyShop({ id, name, thumbnail }) {
   const classes = useStyles();
 
+  const { react } = useContext(ShopContext);
+
   return (
     <Card className={classes.card}>
       <CardMedia
@@ -44,10 +48,10 @@ function NearbyShop({ id, name, thumbnail }) {
         </Typography>
       </CardContent>
       <CardActions>
-        <IconButton>
+        <IconButton onClick={() => react(id, 'LIKE')}>
           <ThumbUp />
         </IconButton>
-        <IconButton>
+        <IconButton onClick={() => react(id, 'DISLIKE')}>
           <ThumbDown />
         </IconButton>
       </CardActions>

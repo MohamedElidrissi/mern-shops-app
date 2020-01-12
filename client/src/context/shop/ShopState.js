@@ -7,6 +7,8 @@ import ShopContext from './shopContext';
 import {
   FETCH_NEARBY_SHOPS_SUCCESS,
   FETCH_NEARBY_SHOPS_FAIL,
+  REACTION_SUCCESS,
+  REACTION_FAIL,
 } from './shopActions';
 
 export default props => {
@@ -40,11 +42,30 @@ export default props => {
     }
   };
 
+  // no pun intended
+  const react = async (shopId, type) => {
+    try {
+      await axios.post('/reactions', { shopId, type }, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      dispatch({
+        type: REACTION_SUCCESS,
+        payload: shopId,
+      });
+    } catch (err) {
+      dispatch({ type: REACTION_FAIL });
+    }
+  };
+
   return (
     <ShopContext.Provider
       value={{
         ...state,
         fetchShops,
+        react,
       }}
     >
       {props.children}

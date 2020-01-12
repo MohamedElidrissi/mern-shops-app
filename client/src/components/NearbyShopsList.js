@@ -18,7 +18,10 @@ function NearbyShopsList() {
   const classes = useStyles();
 
   const [coords, setCoords] = useState({ long: 0, lat: 0 });
-  const { fetchShops, nearbyShops: { data, hasMore } } = useContext(ShopContext);
+  const {
+    fetchShops,
+    nearbyShops: { data, hasMore }
+  } = useContext(ShopContext);
 
   useEffect(() => {
     window.navigator.geolocation.getCurrentPosition(({coords}) => {
