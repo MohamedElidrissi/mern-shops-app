@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { Fragment, useState, useEffect, useContext } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
+import Alert from "@material-ui/lab/Alert";
 
 import ShopContext from '../context/shop/shopContext';
 import NearbyShop from './NearbyShop';
@@ -37,27 +38,34 @@ function NearbyShopsList() {
   }, [coords]);
 
   return (
-    <Container component="main" className={classes.root}>
-      <InfiniteScroll
-        pageStart={0}
-        hasMore={hasMore}
-        loadMore={page => fetchShops(coords.long, coords.lat, page)}
-        loader={<p style={{ textAlign: 'center' }}>Loading...</p>}
-        useWindow={true}
-      >
-        <Grid container spacing={4}>
-          {data.map(({ _id, name, picture }) => (
-            <Grid item key={_id} xs={12} sm={6} md={4} lg={3}>
-              <NearbyShop
-                id={_id}
-                name={name}
-                thumbnail={picture}
-              />
-            </Grid>
-          ))}
-        </Grid>
-      </InfiniteScroll>
-    </Container>
+    <Fragment>
+      { (!coords.long && !coords.lat) && (
+        <Alert severity="warning">
+          Please allow location permission in your browser to see your nearby shops.
+        </Alert>
+      )}
+      <Container component="main" className={classes.root}>
+        <InfiniteScroll
+          pageStart={0}
+          hasMore={hasMore}
+          loadMore={page => fetchShops(coords.long, coords.lat, page)}
+          loader={<p style={{ textAlign: 'center' }}>Loading...</p>}
+          useWindow={true}
+        >
+          <Grid container spacing={4}>
+            {data.map(({ _id, name, picture }) => (
+              <Grid item key={_id} xs={12} sm={6} md={4} lg={3}>
+                <NearbyShop
+                  id={_id}
+                  name={name}
+                  thumbnail={picture}
+                />
+              </Grid>
+            ))}
+          </Grid>
+        </InfiniteScroll>
+      </Container>
+    </Fragment>
   );
 }
 
