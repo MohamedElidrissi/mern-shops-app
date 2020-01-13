@@ -56,7 +56,7 @@ function NearbyShopsList() {
       )}
       <Container component="main" className={classes.root}>
         <InfiniteScroll
-          pageStart={0}
+          pageStart={1}
           hasMore={hasMore}
           loadMore={page => fetchShops(coords.long, coords.lat, page)}
           loader={<p style={{ textAlign: 'center' }}>Loading...</p>}
