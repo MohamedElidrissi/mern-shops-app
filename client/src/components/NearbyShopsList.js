@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect, useContext } from 'react';
+import React, { Fragment, useEffect, useContext } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -17,48 +17,27 @@ const useStyles = makeStyles(theme => ({
 function NearbyShopsList() {
   const classes = useStyles();
 
-  const [isLocPermissionAllowed, setLocPermissionAllowed] = useState(true);
-  const [coords, setCoords] = useState({ long: 0, lat: 0 });
   const {
-    fetchShops,
+    obtainGeolocation,
+    fetchNextNearbyShops,
+    position,
+    error,
     nearbyShops: { data, hasMore }
   } = useContext(ShopContext);
 
   useEffect(() => {
-    window.navigator.geolocation.getCurrentPosition(({coords}) => {
-      setCoords({
-        long: coords.longitude,
-        lat: coords.latitude
-      })
-      setLocPermissionAllowed(true);
-    }, (error) => {
-      if (error.code === 1) {
-        // PERMISSION_ERROR
-        setLocPermissionAllowed(false);
-      }
-    });
+    obtainGeolocation();
     // eslint-disable-next-line
   }, []);
 
-  useEffect(() => {
-    if (coords.long && coords.lat) {
-      fetchShops(coords.long, coords.lat);
-    }
-    // eslint-disable-next-line
-  }, [coords]);
-
   return (
     <Fragment>
-      { !isLocPermissionAllowed && (
-        <Alert severity="warning">
-          Please allow location permission in your browser to see your nearby shops.
-        </Alert>
-      )}
+      { error && <Alert severity="error">{error}</Alert> }
       <Container component="main" className={classes.root}>
         <InfiniteScroll
           pageStart={1}
           hasMore={hasMore}
-          loadMore={page => fetchShops(coords.long, coords.lat, page)}
+          loadMore={page => fetchNextNearbyShops(position.long, position.lat, page)}
           loader={<p style={{ textAlign: 'center' }}>Loading...</p>}
           useWindow={true}
         >
