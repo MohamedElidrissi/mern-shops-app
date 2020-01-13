@@ -52,6 +52,10 @@ export default (state, action) => {
       return {
         user: {},
         isAuthenticated: false,
+        flash: {
+          severity: '',
+          message: '',
+        },
       };
     default:
       return state;
