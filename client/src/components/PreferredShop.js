@@ -8,6 +8,8 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 
+import ShopContext from '../context/shop/shopContext';
+
 const useStyles = makeStyles(theme => ({
   cardGrid: {
     paddingTop: theme.spacing(8),
@@ -32,6 +34,8 @@ const useStyles = makeStyles(theme => ({
 function PreferredShop({ id, name, thumbnail }) {
   const classes = useStyles();
 
+  const { unlikeShop } = useContext(ShopContext);
+
   return (
     <Card className={classes.card}>
       <CardMedia
@@ -45,8 +49,11 @@ function PreferredShop({ id, name, thumbnail }) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button variant="text" className={classes.button}>
-          Delete
+        <Button
+          variant="text"
+          className={classes.button}
+          onClick={() => unlikeShop(id)}>
+          Remove
         </Button>
       </CardActions>
     </Card>

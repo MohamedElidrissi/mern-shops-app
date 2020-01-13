@@ -7,7 +7,7 @@ import {
   FETCH_PREFERRED_SHOPS_FAIL,
   FETCH_PREFERRED_SHOPS_SUCCESS,
   GET_GEOLOCATION_SUCCESS,
-  GET_GEOLOCATION_FAIL,
+  GET_GEOLOCATION_FAIL, UNLIKE_SHOP_FAIL, UNLIKE_SHOP_SUCCESS,
 } from './shopActions';
 
 export default (state, action) => {
@@ -36,6 +36,11 @@ export default (state, action) => {
           hasMore: state.nearbyShops.hasMore,
         }
       };
+    case UNLIKE_SHOP_SUCCESS:
+      return {
+        ...state,
+        preferredShops: state.preferredShops.filter(shop => shop._id !== action.payload),
+      };
     case FETCH_PREFERRED_SHOPS_SUCCESS:
       return {
         ...state,
@@ -57,6 +62,7 @@ export default (state, action) => {
     case FETCH_NEARBY_SHOPS_FAIL:
     case FETCH_PREFERRED_SHOPS_FAIL:
     case REACTION_FAIL:
+    case UNLIKE_SHOP_FAIL:
     default:
       return state;
   }

@@ -10,6 +10,8 @@ import {
   FETCH_NEARBY_SHOPS_FAIL,
   REACTION_SUCCESS,
   REACTION_FAIL,
+  UNLIKE_SHOP_SUCCESS,
+  UNLIKE_SHOP_FAIL,
   FETCH_PREFERRED_SHOPS_FAIL,
   FETCH_PREFERRED_SHOPS_SUCCESS,
   GET_GEOLOCATION_SUCCESS,
@@ -136,6 +138,26 @@ export default props => {
     }
   };
 
+  const unlikeShop = async shopId => {
+    try {
+      await axios.delete('/reactions', {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        data: {
+          shopId
+        }
+      });
+
+      dispatch({
+        type: UNLIKE_SHOP_SUCCESS,
+        payload: shopId,
+      });
+    } catch (err) {
+      dispatch({ type: UNLIKE_SHOP_FAIL });
+    }
+  };
+
   return (
     <ShopContext.Provider
       value={{
@@ -144,6 +166,7 @@ export default props => {
         fetchNextNearbyShops,
         fetchPreferredShops,
         react,
+        unlikeShop,
       }}
     >
       {props.children}
