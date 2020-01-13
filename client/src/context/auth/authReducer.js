@@ -5,6 +5,7 @@ import {
   LOGIN_SUCCESS,
   USER_FETCH_SUCCESS,
   USER_FETCH_FAIL,
+  LOGOUT_SUCCESS,
 } from './authActions';
 
 export default (state, action) => {
@@ -44,6 +45,12 @@ export default (state, action) => {
         ...state,
         user: {},
         isLoading: false,
+        isAuthenticated: false,
+      };
+    case LOGOUT_SUCCESS:
+      localStorage.removeItem('token');
+      return {
+        user: {},
         isAuthenticated: false,
       };
     default:

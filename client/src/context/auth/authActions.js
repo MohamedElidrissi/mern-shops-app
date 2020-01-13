@@ -6,3 +6,5 @@ export const LOGIN_FAIL = 'LOGIN_FAIL';
 
 export const USER_FETCH_SUCCESS = 'USER_FETCH_SUCCESS';
 export const USER_FETCH_FAIL = 'USER_FETCH_FAIL';
+
+export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';

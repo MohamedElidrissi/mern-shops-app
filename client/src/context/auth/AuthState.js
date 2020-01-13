@@ -7,7 +7,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   USER_FETCH_SUCCESS,
-  USER_FETCH_FAIL,
+  USER_FETCH_FAIL, LOGOUT_SUCCESS,
 } from './authActions';
 import AuthContext from './authContext';
 import authReducer from './authReducer';
@@ -78,6 +78,12 @@ export default props => {
     }
   };
 
+  const logout = () => {
+    setAuthToken(null);
+
+    dispatch({ type: LOGOUT_SUCCESS });
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -85,6 +91,7 @@ export default props => {
         register,
         login,
         fetchUser,
+        logout,
       }}
     >
       {props.children}

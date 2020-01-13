@@ -4,6 +4,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
+import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 
 import AuthContext from '../../context/auth/authContext';
@@ -37,7 +38,7 @@ const useStyles = makeStyles(theme => ({
 
 function Header() {
   const classes = useStyles();
-  const { fetchUser } = useContext(AuthContext);
+  const { fetchUser, logout } = useContext(AuthContext);
 
   useEffect(() => {
     fetchUser();
@@ -82,6 +83,9 @@ function Header() {
             >
               Preferred Shops
             </Link>
+            <Button variant="outlined" color="primary" onClick={logout}>
+              Logout
+            </Button>
           </nav>
         </Toolbar>
       </AppBar>
