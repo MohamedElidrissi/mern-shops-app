@@ -15,3 +15,10 @@ A MERN stack app that lists shops nearby.
   - **passport-local**: a passport strategy, used to authenticate the user with a username and password.
   - **concurrently**: used to run the backend and frontend concurrently.
   - **nodemon**: used to watch the .js files and restart the server.
+
+- frontend:
+  - **material-ui**
+  - **react-router**: used to handle routing.
+  - **react-infinite-scroller**: used to paginate nearby shops.
+  - **parse-link-header**: used to parse the `Link` header from the API.
+  - **axios**: used to send requests to the API.
