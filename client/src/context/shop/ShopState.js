@@ -8,7 +8,7 @@ import {
   FETCH_NEARBY_SHOPS_SUCCESS,
   FETCH_NEARBY_SHOPS_FAIL,
   REACTION_SUCCESS,
-  REACTION_FAIL,
+  REACTION_FAIL, FETCH_PREFERRED_SHOPS_FAIL, FETCH_PREFERRED_SHOPS_SUCCESS,
 } from './shopActions';
 
 export default props => {
@@ -18,6 +18,7 @@ export default props => {
       hasMore: false,
       nextPage: null
     },
+    preferredShops: []
   };
 
   const [state, dispatch] = useReducer(shopReducer, initialState);
@@ -39,6 +40,19 @@ export default props => {
       });
     } catch (err) {
       dispatch({ type: FETCH_NEARBY_SHOPS_FAIL });
+    }
+  };
+
+  const fetchPreferredShops = async () => {
+    try {
+      const res = await axios.get('/reactions?type=like');
+
+      dispatch({
+        type: FETCH_PREFERRED_SHOPS_SUCCESS,
+        payload: res.data
+      })
+    } catch (err) {
+      dispatch({ type: FETCH_PREFERRED_SHOPS_FAIL })
     }
   };
 
@@ -65,6 +79,7 @@ export default props => {
       value={{
         ...state,
         fetchShops,
+        fetchPreferredShops,
         react,
       }}
     >

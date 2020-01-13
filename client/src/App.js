@@ -6,6 +6,7 @@ import ShopState from './context/shop/ShopState';
 import ProtectedRoute from './components/routing/ProtectedRoute';
 import Header from './components/layout/Header';
 import NearbyShopsList from './components/NearbyShopsList';
+import PreferredShopsList from './components/PreferredShopsList';
 import SignUp from './pages/SignUp';
 import SignIn from './pages/SignIn';
 
@@ -23,6 +24,15 @@ function App() {
                   <Fragment>
                     <Header/>
                     <NearbyShopsList/>
+                  </Fragment>
+                )}
+              />
+              <ProtectedRoute
+                path="/preferred"
+                render={() => (
+                  <Fragment>
+                    <Header/>
+                    <PreferredShopsList/>
                   </Fragment>
                 )}
               />
