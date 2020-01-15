@@ -1,6 +1,7 @@
 # mern-shops-app
 
-This is a part of my #100DaysOfCode challenge, its a Fullstack application built with the MERN stack.
+This is a part of my #100DaysOfCode challenge, its a Fullstack application built with the MERN stack
+and consists of the following features:
 
  - User can sign up with a username, email, and password.
  - User can sign in with email and password.
