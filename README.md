@@ -1,6 +1,17 @@
 # mern-shops-app
 
-A MERN stack app that lists shops nearby.
+This is a part of my #100DaysOfCode challenge, its a Fullstack application built with the MERN stack.
+
+ - User can sign up with a username, email, and password.
+ - User can sign in with email and password.
+ - User can see the list of shops sorted by distance from his current location in the "Nearby Shops" page.
+   - **Note**: this will not work in Google Chrome while serving the app through http, use Firefox browser instead.
+ - User can like a shop and have it added to his preferred shops.
+   - Liked shops are not displayed in the "Nearby Shops" page
+ - User can dislike a shop, this will hide the shop from the "Nearby Shops" page for the next 2 hours.
+ - User can see his preferred shops in the "Preferred Shops" page.
+ - User can remove a shop from his preferred shops.
+ - User can log out.
 
 ## How to run:
 
@@ -67,3 +78,27 @@ npm run dev
   - **react-infinite-scroller**: used to paginate nearby shops.
   - **parse-link-header**: used to parse the `Link` header from the API.
   - **axios**: used to send requests to the API.
+
+## What could be improved:
+
+This is by no mean a perfect app, but trying to make it perfect from the first try can be an endless loop.
+With that said, here are some things that I think I can improve in the future:
+
+ - JWT tokens *should* have an expiry time and thus should be refresh-able.
+ - Storing tokens in the front-end using `localStorage` is not safe,
+   an alternative I learnt about recently is `HttpOnly` cookies.
+ - No tests! testing a functionality manually after each change can get tedious.
+ - On the frontend, requesting for location permission on component-mount is not the best way out there,
+   instead I should've asked the location on user signup and use it for each request,
+   and then provide the user a way to update his location whenever he wishes to.
+
+## Helpful resources
+Starting a new project can be fun, especially when getting to learn new things in the process.
+Below are some resources that helped me create this project:
+
+ - [Best practices for designing a pragmatic RESTful API](https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api)
+ - [MongoDB TTL (time-to-live) indexes](https://docs.mongodb.com/manual/core/index-ttl/)
+ - [MongoDB partial indexes](https://docs.mongodb.com/manual/core/index-partial/)
+
+## License
+Licensed under [MIT License](LICENSE)
